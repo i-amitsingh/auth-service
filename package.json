@@ -1,32 +1,41 @@
 {
-    "name": "authservice",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "dev": "nodemon src/server.js",
-        "format:fix": "prettier --write",
-        "format:check": "prettier --check",
-        "lint:fix": "eslint . --fix",
-        "lint:check": "eslint .",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/i-amitsingh/auth-service.git"
-    },
-    "author": "amitmansingh2003@gmail.com",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/i-amitsingh/auth-service/issues"
-    },
-    "homepage": "https://github.com/i-amitsingh/auth-service#readme",
-    "devDependencies": {
-        "@eslint/js": "^10.0.1",
-        "@types/node": "^26.1.1",
-        "eslint": "^10.7.0",
-        "prettier": "3.9.5",
-        "typescript": "^5.9.3",
-        "typescript-eslint": "^8.64.0"
-    }
+  "name": "authservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "format:fix": "prettier --write",
+    "format:check": "prettier --check",
+    "lint:fix": "eslint . --fix",
+    "lint:check": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-amitsingh/auth-service.git"
+  },
+  "author": "amitmansingh2003@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/i-amitsingh/auth-service/issues"
+  },
+  "homepage": "https://github.com/i-amitsingh/auth-service#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "eslint": "^10.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "3.9.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.64.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint:fix",
+      "npm run format:fix"
+    ]
+  }
 }
