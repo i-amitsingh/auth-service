@@ -1,1 +1,2 @@
-console.log("amit");
+const name: string = 'amit';
+console.log(name);
