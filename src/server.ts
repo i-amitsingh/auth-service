@@ -1,2 +1,1 @@
-const name: string = 'amit';
-console.log(name);
+// import { Config } from './config/index.ts';
