@@ -1,17 +1,16 @@
 import { Config } from './config/index.ts';
 import { app } from './app.ts';
+import logger from './config/logger.ts';
 
 const startServer = () => {
     try {
         const port = Config.PORT;
 
         app.listen(port, () => {
-            // eslint-disable-next-line no-console
-            console.log(`Server is running on port ${port}`);
+            logger.info(`Server is running on port ${port}`);
         });
     } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Error starting the server:', error);
+        logger.error('Error starting the server:', error);
     }
 };
 
