@@ -5,7 +5,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec ts-node-esm src/server.ts",
+    "dev": "nodemon --exec tsx src/server.ts",
     "format:fix": "prettier --write",
     "format:check": "prettier --check",
     "lint:fix": "eslint . --fix",

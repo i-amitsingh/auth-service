@@ -1,0 +1,13 @@
+services:
+  auth-service:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    ports:
+      - "${PORT:-5555}:5555"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
