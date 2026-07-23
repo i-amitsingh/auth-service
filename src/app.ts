@@ -1,11 +1,14 @@
 import express from 'express';
 import logger from './config/logger.ts';
 import { HttpError } from 'http-errors';
+import authRoutes from './routes/auth.ts';
 const app = express();
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+app.use('/auth', authRoutes);
 
 // global error handler
 app.use(

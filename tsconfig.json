@@ -9,11 +9,15 @@
         // See also https://aka.ms/tsconfig/module
         "module": "nodenext",
         "target": "esnext",
-        "types": [],
+        "types": ["node"],
         // For nodejs:
         // "lib": ["esnext"],
         // "types": ["node"],
         // and npm install -D @types/node
+
+        // TypeORM entities/decorators
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
 
         // Other Outputs
         "sourceMap": true,

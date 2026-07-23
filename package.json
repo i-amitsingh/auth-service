@@ -5,12 +5,16 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec tsx src/server.ts",
+    "dev": "NODE_ENV=development nodemon --exec tsx src/server.ts",
+    "typeorm": "NODE_ENV=development tsx node_modules/typeorm/cli.js --dataSource src/config/data-source.ts",
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
     "format:fix": "prettier --write",
     "format:check": "prettier --check",
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint .",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --watch --runInBand",
+    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --watch --runInBand",
     "prepare": "husky"
   },
   "repository": {
@@ -29,6 +33,7 @@
     "@types/http-errors": "^2.0.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.1.1",
+    "@types/pg": "^8.20.0",
     "@types/supertest": "^7.2.1",
     "@types/winston": "^2.4.4",
     "eslint": "^10.7.0",
@@ -54,6 +59,9 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "http-errors": "^2.0.1",
+    "pg": "^8.22.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^1.1.0",
     "winston": "^3.19.0"
   }
 }

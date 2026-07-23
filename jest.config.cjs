@@ -8,4 +8,7 @@ module.exports = {
     moduleNameMapper: {
         '^(\\.{1,2}/.*)\\.js$': '$1',
     },
+    verbose: true,
+    globalSetup: './test/setup.ts',
+    globalTeardown: './test/teardown.ts',
 };
