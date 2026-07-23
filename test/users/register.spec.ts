@@ -1,23 +1,36 @@
-import { describe } from 'node:test';
 import app from '../../src/app.ts';
 import request from 'supertest';
+import { DataSource } from 'typeorm';
+import { AppDataSource } from '../../src/config/data-source.ts';
+import { truncateTables } from '../utils/index.ts';
+import { User } from '../../src/entity/User.ts';
 
 describe('POST /auth/register', () => {
+    let connection: DataSource;
+
+    beforeAll(async () => {
+        connection = await AppDataSource.initialize();
+    });
+
+    beforeEach(async () => {
+        await truncateTables(connection);
+    });
+
+    afterAll(async () => {
+        await connection.destroy();
+    });
+
     describe('Given all fields', () => {
         it('should return 201 status code', async () => {
-            // AAA -> Arrange Act Assert
-            //  Arrange
             const userData = {
                 firstName: 'amit',
                 lastName: 'singh',
                 email: 'amit@gmail.com',
                 password: 'password123',
             };
-            //  Act
             const response = await request(app)
                 .post('/auth/register')
                 .send(userData);
-            //  Assert
             expect(response.statusCode).toBe(201);
         });
 
@@ -28,11 +41,9 @@ describe('POST /auth/register', () => {
                 email: 'amit@gmail.com',
                 password: 'password123',
             };
-            //  Act
             const response = await request(app)
                 .post('/auth/register')
                 .send(userData);
-            //  Assert
             expect(
                 (response.headers as Record<string, string>)['content-type'],
             ).toEqual(expect.stringContaining('json'));
@@ -45,33 +56,41 @@ describe('POST /auth/register', () => {
                 email: 'amit@gmail.com',
                 password: 'password123',
             };
-            //  Act
             const response = await request(app)
                 .post('/auth/register')
                 .send(userData);
-            //  Assert
             expect(response.body).toEqual({
                 message: 'User registered successfully',
             });
         });
 
-        it('should persist the user data in the database', async () => {
+        it('should persist the user in the database', async () => {
             const userData = {
                 firstName: 'amit',
                 lastName: 'singh',
                 email: 'amit@gmail.com',
                 password: 'password123',
             };
-            //  Act
-            const response = await request(app)
-                .post('/auth/register')
-                .send(userData);
-            //  Assert
-            expect(response.body).toEqual({
-                message: 'User registered successfully',
-            });
+            await request(app).post('/auth/register').send(userData);
+
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+            expect(users).toHaveLength(1);
+            expect(users[0]?.firstName).toBe('amit');
+            expect(users[0]?.lastName).toBe('singh');
+            expect(users[0]?.email).toBe('amit@gmail.com');
         });
     });
 
-    describe('Fields are missing', {});
+    describe('Fields are missing', () => {
+        it('should return 400 status code', async () => {
+            const response = await request(app).post('/auth/register').send({
+                firstName: '',
+                lastName: '',
+                email: 'invalid-email',
+                password: 'short',
+            });
+            expect(response.statusCode).toBe(400);
+        });
+    });
 });

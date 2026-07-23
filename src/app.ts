@@ -2,10 +2,13 @@ import express from 'express';
 import logger from './config/logger.ts';
 import { HttpError } from 'http-errors';
 import authRoutes from './routes/auth.ts';
+
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.use(express.json());
+
+app.get('/', (_req, res) => {
+    res.status(200).send('Hello World!');
 });
 
 app.use('/auth', authRoutes);
