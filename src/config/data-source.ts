@@ -24,7 +24,8 @@ export const AppDataSource = new DataSource({
     database: requireEnv('DB_NAME', Config.DB_NAME),
     // synchronize auto-creates schema from entities — only for test (TDD).
     // Dev and production always use migrations.
-    synchronize: Config.NODE_ENV === 'test',
+    // synchronize: Config.NODE_ENV === 'test',
+    synchronize: false,
     logging: false,
     entities: [User],
     migrations: ['src/migrations/*.ts'],

@@ -2,6 +2,7 @@ import { User } from '../entity/User.ts';
 import type { UserData } from '../types/index.ts';
 import { Repository } from 'typeorm';
 import createHttpError from 'http-errors';
+import { roles } from '../constants/index.ts';
 
 export class UserService {
     constructor(private userRepository: Repository<User>) {}
@@ -13,6 +14,7 @@ export class UserService {
                 lastName,
                 email,
                 password,
+                role: roles.Customer,
             });
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
