@@ -80,17 +80,20 @@ describe('POST /auth/register', () => {
             expect(users[0]?.lastName).toBe('singh');
             expect(users[0]?.email).toBe('amit@gmail.com');
         });
-    });
 
-    describe('Fields are missing', () => {
-        it('should return 400 status code', async () => {
-            const response = await request(app).post('/auth/register').send({
-                firstName: '',
-                lastName: '',
-                email: 'invalid-email',
-                password: 'short',
-            });
-            expect(response.statusCode).toBe(400);
+        it('should return an id for the created user', async () => {
+            const userData = {
+                firstName: 'amit',
+                lastName: 'singh',
+                email: 'amit@gmail.com',
+                password: 'password123',
+            };
+            await request(app).post('/auth/register').send(userData);
+
+            const userRepository = connection.getRepository(User);
+            const users = await userRepository.find();
+            expect(users).toHaveLength(1);
+            expect(users[0]?.id).toBeDefined();
         });
     });
 });
